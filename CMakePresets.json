@@ -1,0 +1,45 @@
+{
+  "version": 4,
+  "configurePresets": [
+    {
+      "name": "linux-x64-release",
+      "displayName": "Linux x86-64 Release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/linux-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "windows-x64-release",
+      "displayName": "Windows x64 Release",
+      "binaryDir": "${sourceDir}/build/windows-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "linux-build",
+      "configurePreset": "linux-x64-release"
+    },
+    {
+      "name": "windows-build",
+      "configurePreset": "windows-x64-release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "linux-test",
+      "configurePreset": "linux-x64-release",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "windows-test",
+      "configurePreset": "windows-x64-release",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}

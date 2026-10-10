@@ -1,0 +1,30 @@
+name: RFRP Multiplatform CI Build & Test
+
+on: [push, pull_request]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build qt6-base-dev libsqlite3-dev libssl-dev
+      - name: Configure & Build
+        run: |
+          cmake --preset linux-x64-release
+          cmake --build --preset linux-build
+      - name: Run CTest
+        run: ctest --preset linux-test
+
+  build-windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Ninja
+        uses: ashutoshvarma/setup-ninja@master
+      - name: Configure & Build
+        run: |
+          cmake --preset windows-x64-release
+          cmake --build --preset windows-build
